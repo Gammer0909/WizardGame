@@ -1,0 +1,15 @@
+/Users/kalliegarzon/Documents/Wizard-Game/bin/Debug/net7.0/Wizard-Game
+/Users/kalliegarzon/Documents/Wizard-Game/bin/Debug/net7.0/Wizard-Game.deps.json
+/Users/kalliegarzon/Documents/Wizard-Game/bin/Debug/net7.0/Wizard-Game.runtimeconfig.json
+/Users/kalliegarzon/Documents/Wizard-Game/bin/Debug/net7.0/Wizard-Game.dll
+/Users/kalliegarzon/Documents/Wizard-Game/bin/Debug/net7.0/Wizard-Game.pdb
+/Users/kalliegarzon/Documents/Wizard-Game/obj/Debug/net7.0/Wizard-Game.csproj.AssemblyReference.cache
+/Users/kalliegarzon/Documents/Wizard-Game/obj/Debug/net7.0/Wizard-Game.GeneratedMSBuildEditorConfig.editorconfig
+/Users/kalliegarzon/Documents/Wizard-Game/obj/Debug/net7.0/Wizard-Game.AssemblyInfoInputs.cache
+/Users/kalliegarzon/Documents/Wizard-Game/obj/Debug/net7.0/Wizard-Game.AssemblyInfo.cs
+/Users/kalliegarzon/Documents/Wizard-Game/obj/Debug/net7.0/Wizard-Game.csproj.CoreCompileInputs.cache
+/Users/kalliegarzon/Documents/Wizard-Game/obj/Debug/net7.0/Wizard-Game.dll
+/Users/kalliegarzon/Documents/Wizard-Game/obj/Debug/net7.0/refint/Wizard-Game.dll
+/Users/kalliegarzon/Documents/Wizard-Game/obj/Debug/net7.0/Wizard-Game.pdb
+/Users/kalliegarzon/Documents/Wizard-Game/obj/Debug/net7.0/Wizard-Game.genruntimeconfig.cache
+/Users/kalliegarzon/Documents/Wizard-Game/obj/Debug/net7.0/ref/Wizard-Game.dll
