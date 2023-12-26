@@ -1,4 +1,5 @@
 using System;
+using Gammer0909.WizardGame.Dice;
 
 namespace Gammer0909.WizardGame.Entities;
 
@@ -17,6 +18,8 @@ public interface IEntity {
     /// The health of the entity.
     /// </summary>
     public int Health { get; set; }
+
+    public DieType goldDice { get; set; }
 
     /// <summary>
     /// Is the armor of the entity active?

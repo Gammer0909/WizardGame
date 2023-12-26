@@ -9,11 +9,13 @@ public class Zombie : IEntity {
     public string Name { get; set; }
     public int Health { get; set; }
     public bool isArmorActive { get; set; }
+    public DieType goldDice { get; set; }
 
     public Zombie(string name, int health) {
         this.Name = name;
         this.Health = health;
         this.isArmorActive = false;
+        this.goldDice = DieType.D6;
     }
 
     public void Attack(IEntity entity) {

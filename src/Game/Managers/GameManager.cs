@@ -69,6 +69,12 @@ public class GameManager {
         return;
 
     }
+
+    public void CastSpell(ISpell spell) {
+
+        spell.Cast(this.EntityManager.GetCurrentEntity());
+
+    }
     #endregion
 
 

@@ -22,10 +22,13 @@ public class EntityManager {
         this.entities.Enqueue(monster);
     }
 
-    public IEntity GetEntity() {
+    public void GetEntity() {
         var entity = this.entities.Dequeue();
+        // Is there anything left in the queue?
+        if (this.entities.Count == 0) {
+            this.CreateEntities(5);
+        }
         this.currentEntity = entity;
-        return entity;
     }
 
     public bool HasEntities() {

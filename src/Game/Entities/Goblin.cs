@@ -12,11 +12,13 @@ public class Goblin : IEntity {
     public string Name { get; set; }
     public int Health { get; set; }
     public bool isArmorActive { get; set; }
+    public DieType goldDice { get; set; }
 
     public Goblin(string name, int health) {
         this.Name = name;
         this.Health = health;
         this.isArmorActive = false;
+        this.goldDice = DieType.D8;
     }
 
     public void Attack(IEntity entity) {
