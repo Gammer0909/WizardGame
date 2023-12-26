@@ -2,7 +2,7 @@
 
 This is a write of the first project that I ever started building[^1], a text based RPG-Style game where you play a wizard that's out to get gold for... a reason...
 
-(Don't hurt me I haven't worked on the story that much D:)
+This also comes with a snazzy Console library I wrote to use for this game, if you want to use that.. have fun.
 
 ## Contributing
 
