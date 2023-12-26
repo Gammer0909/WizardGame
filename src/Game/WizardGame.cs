@@ -41,14 +41,18 @@ public class WizardGame : Game {
 
         // Player Setup
         this.Window.WriteLine("Welcome to Gammer0909's Wizard Game!");
-        this.Window.WriteLine("Please enter your adventurer's name: ");
         var playerName = this.GetPlayerName();
 
 
-        var player = new Player(playerName, 10, 100);
+        var player = new Player(playerName, 15, 100);
+
+        player.AddGold(15);
 
         this.Window.WriteLine($"Welcome, {player.Name}!");
         this.Window.WriteLine("Press any key to view the rules.");
+        this.Window.inputHandler.ReadKey();
+
+        this.Window.Clear();
 
         // Rules
         this.PrintRules();
@@ -60,7 +64,7 @@ public class WizardGame : Game {
         var store = new SpellShop();
 
         store.AddSpell(new Fireball(), 15);
-        store.AddSpell(new Heal(), 30);
+        store.AddSpell(new Heal(), 20);
         store.AddSpell(new MageArmor(), 10);
 
         this.gm = new GameManager(player, store, new EntityManager());
@@ -72,6 +76,12 @@ public class WizardGame : Game {
         // Game Loop
         this.Window.WriteLine("Press any key to start the game!");
         this.Window.inputHandler.ReadKey();
+
+        // Create the monsters
+        this.gm.EntityManager.CreateEntities(5);
+        // Dequeue the NullEntity
+        this.gm.EntityManager.GetEntity();
+        this.Window.Clear();
         this.Update();
 
 
@@ -112,12 +122,19 @@ public class WizardGame : Game {
                 this.Window.WriteLine($"The next monster is a {this.gm.EntityManager.GetCurrentEntity().Name}!");
             }
 
+            // This after death check so we don't get "The Entity has -1 health remaining!"
+            this.Window.WriteLine($"The {this.gm.EntityManager.GetCurrentEntity().Name} has {this.gm.EntityManager.GetCurrentEntity().Health} health remaining!");
+            this.Window.WriteLine($"You have {this.gm.Player.GetGold()} gold.");
+            this.Window.WriteLine($"You have {this.gm.Player.Health} health remaining!\n\n");
+
             // Check if the player has won
             if (this.gm.Player.GetGold() >= 1000) {
                 // TODO: Make this more fancy
                 this.HandleEnd(false);
                 break;
             }            
+
+            this.Window.Clear();
 
         }
 
@@ -159,7 +176,7 @@ public class WizardGame : Game {
 
     private void BuySpell() {
 
-        this.Window.WriteLine("Which Spell would you like to buy?");
+        this.Window.WriteLine($"You have {this.gm.Player.GetGold()} Gold.\nWhich Spell would you like to buy?");
         this.Window.WriteLine(this.gm.SpellShop.ToString());
 
         var spellName = this.Window.inputHandler.ReadLine();
@@ -167,6 +184,14 @@ public class WizardGame : Game {
 
         if (spellName == "quit" || spellName == "q") {
             
+            return;
+
+        }
+
+        if (spellName == "help") {
+
+            this.PrintRules();
+            this.BuySpell();
             return;
 
         }
@@ -190,6 +215,7 @@ public class WizardGame : Game {
             this.Window.WriteLine("You don't have enough gold to buy that spell!");
             this.BuySpell();
         }
+        this.Window.WriteLine($"You successfully bought the {spellToBuy.Name} spell!");
 
     }
 
@@ -199,22 +225,25 @@ public class WizardGame : Game {
         this.Window.ForegroundColor = ConsoleRGB.YellowForeground;
         this.Window.WriteLine("--- RULES ---");
         this.Window.WriteLine("---=======---\nYou are a wizard. Fight monsters as they come, and use the gold they drop to buy more spells.\nGet 1000 gold to win.\n---=======---");
-        this.Window.WriteLine("\nWhen prompted, type \"help\" to get a list of commands, and bring up this menu.\n---=======---");
-        this.Window.WriteLine("--- COMMANDS ---");
-        this.Window.WriteLine("---=======---\nhelp - Brings up this menu.\n---=======---");
-        this.Window.WriteLine("spells - Brings up the spell-buying menu\n---=======---");
+        this.Window.Write("Press any key to continue.");
+        this.Window.inputHandler.ReadKey();
+        this.Window.WriteLine("\r--- COMMANDS ---           ");
+        this.Window.WriteLine("---=======---\nhelp - Brings up this menu.");
+        this.Window.WriteLine("spells - Brings up the spell-buying menu.");
         this.Window.WriteLine("quit - Quits the game.\n---=======---");
-        this.Window.WriteLine("--- FIGHTING ---");
-        this.Window.WriteLine("---=======---\nYou will fight one monster at a time, casting a spell of your choice.\n---=======---");
-        this.Window.WriteLine("If you win, you will get gold, and the next monster will be summoned.\n---=======---");
+        this.Window.Write("Press any key to continue.");
+        this.Window.inputHandler.ReadKey();
+        this.Window.WriteLine("\r--- FIGHTING ---            ");
+        this.Window.WriteLine("---=======---\nYou will fight one monster at a time, casting a spell of your choice.");
+        this.Window.WriteLine("If you win, you will get gold, and the next monster will be summoned.");
         this.Window.WriteLine("If you lose, you will be sent back to the main menu.\n---=======---");
-        this.Window.WriteLine("--- FIGHTING COMMANDS ---");
-        this.Window.WriteLine("---=======---\nhelp - Brings up this menu.\n---=======---");
-        this.Window.WriteLine("\ncast - Brings up the spellcasting menu.\n---=======---");
+        this.Window.Write("Press any key to continue.");
+        this.Window.inputHandler.ReadKey();
+        this.Window.WriteLine("\r--- FIGHTING COMMANDS ---     ");
+        this.Window.WriteLine("---=======---\nhelp - Brings up this menu.");
+        this.Window.WriteLine("cast - Brings up the spellcasting menu.\n---=======---");
         this.Window.WriteLine("\n\nPress any key to close this menu.");
         this.Window.inputHandler.ReadKey();
-        this.Window.ResetColor();
-        this.Window.ClearFormat();
         this.Window.Clear();
 
     }
@@ -258,13 +287,14 @@ public class WizardGame : Game {
             return;
         }
 
-        this.gm.CastSpell(spellToCast);
+        int dmg = this.gm.CastSpell(spellToCast);
 
-
+        this.Window.WriteLine($"You cast {spellToCast.Name} for {dmg} damage!");
+        
     }
 
     private string GetPlayerName() {
-        this.Window.WriteLine("Please enter your adventurer's name: ");
+        this.Window.Write("Please enter your adventurer's name: ");
         var ret =  this.Window.inputHandler.ReadLine();
 
         // Null check

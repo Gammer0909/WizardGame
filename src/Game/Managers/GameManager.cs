@@ -58,8 +58,6 @@ public class GameManager {
     #region Methods
     public void BuySpell(ISpell wanting) {
 
-        
-
         var spell = this.SpellShop.BuySpell(wanting, this.Player.GetGold());
 
         this.Player.AddSpell(spell.Key);
@@ -70,9 +68,15 @@ public class GameManager {
 
     }
 
-    public void CastSpell(ISpell spell) {
+    public int CastSpell(ISpell spell) {
+
+        int previousHealth = this.EntityManager.GetCurrentEntity().Health;
 
         spell.Cast(this.EntityManager.GetCurrentEntity());
+
+        int damage = previousHealth - this.EntityManager.GetCurrentEntity().Health;
+
+        return damage;
 
     }
     #endregion

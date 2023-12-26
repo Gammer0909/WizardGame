@@ -14,14 +14,14 @@ public class Fireball : ISpell {
     public Fireball() {
         this.Name = "Fireball";
         this.ManaCost = 10;
-        this.damageDie = DieType.D6;
+        this.damageDie = DieType.D8;
         this.Damage = 0;
     }
 
 
     public void Cast(IEntity target) {
 
-        int damage = new DiceRoll(this.damageDie).Roll();
+        int damage = DiceRoll.Roll(this.damageDie);
         target.Health -= damage;
 
     }

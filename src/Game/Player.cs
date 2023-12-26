@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Gammer0909.WizardGame.Casting;
 using Gammer0909.WizardGame.Entities;
+using Gammer0909.WizardGame.Dice;
 
 namespace Gammer0909.WizardGame;
 
@@ -29,6 +30,8 @@ public class Player : IEntity {
     /// The spells that the player owns
     /// </summary>
     public List<ISpell> Spells { get; set; }
+
+    public DieType goldDice { get; set; }
     public bool isArmorActive { get; set; }
 
     /// <summary>
@@ -52,6 +55,7 @@ public class Player : IEntity {
         this._gold = 0;
         this.isArmorActive = false;
         this.Spells = new List<ISpell>();
+        this.goldDice = DieType.NONE;
     }
     #endregion
 
