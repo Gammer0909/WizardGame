@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using Newtonsoft.Json;
 using Gammer0909.WizardGame.Console.Color;
 using Gammer0909.WizardGame.Console.Formatting;
 using Gammer0909.WizardGame.Console.Window;
@@ -39,16 +41,14 @@ public class WizardGame : Game {
     /// <inheritdoc cref="Game.Start"/>
     public override void Start() {
 
-        // Player Setup
-        this.Window.WriteLine("Welcome to Gammer0909's Wizard Game!");
-        var playerName = this.GetPlayerName();
+        this.Window.Clear();
 
+        // Player setup
+        var game = this.Setup();
 
-        var player = new Player(playerName, 15, 100);
+        this.gm = game;
 
-        player.AddGold(15);
-
-        this.Window.WriteLine($"Welcome, {player.Name}!");
+        this.Window.WriteLine($"Welcome, {this.gm.Player.Name}!");
         this.Window.WriteLine("Press any key to view the rules.");
         this.Window.inputHandler.ReadKey();
 
@@ -59,15 +59,6 @@ public class WizardGame : Game {
 
         // First spell
         this.Window.WriteLine("Before we get started, let's pick your first spell!");
-
-        // Setup store
-        var store = new SpellShop();
-
-        store.AddSpell(new Fireball(), 15);
-        store.AddSpell(new Heal(), 20);
-        store.AddSpell(new MageArmor(), 10);
-
-        this.gm = new GameManager(player, store, new EntityManager());
 
         this.gm.EntityManager.CreateEntities(10);
         
@@ -90,7 +81,14 @@ public class WizardGame : Game {
     /// <inheritdoc cref="Game.Update"/>
     public override void Update() {
 
+        int amountOfPrints = 0;
+
         while (gm.IsRunning) {
+
+            if (amountOfPrints >= 5) {
+                this.Window.Clear();
+                amountOfPrints = 0;
+            }
 
             string command = this.Prompt();
 
@@ -134,7 +132,98 @@ public class WizardGame : Game {
                 break;
             }            
 
-            this.Window.Clear();
+            amountOfPrints++;
+
+        }
+
+    }
+
+    private GameManager Setup() {
+
+        this.Window.WriteLine("Welcome to the Wizard Game!");
+
+        this.Window.WriteLine("Do you have a save file? (y/n)");
+
+        var hasSave = this.Window.inputHandler.ReadLine();
+
+        if (hasSave == "y" || hasSave == "yes" || hasSave == "Y" || hasSave == "Yes") {
+
+            // Let's look and see if the saves actually exist
+            if (!Directory.Exists("/save_slots")) {
+                this.Window.WriteLine("You don't have any save files!");
+                this.Window.WriteLine("Press any key to continue.");
+                this.Window.inputHandler.ReadKey();
+                this.Window.Clear();
+                return this.Setup();
+            }
+
+            // Get the save files
+            var saveFiles = Directory.GetFiles("/save_slots");
+
+            // Print the save files
+            foreach (var file in saveFiles) {
+                this.Window.WriteLine(file);
+            }
+
+            // Get the save file
+            this.Window.Write("Which save file would you like to load? (1-5): ");
+            var saveFile = this.Window.inputHandler.ReadLine();
+
+            // Check if the save file exists
+            if (!File.Exists($"/save_slots/save_slot_number_{saveFile}.json")) {
+                this.Window.WriteLine("That save file doesn't exist!");
+                this.Window.WriteLine("Press any key to continue.");
+                this.Window.inputHandler.ReadKey();
+                this.Window.Clear();
+                return this.Setup();
+            }
+
+            // Load the save file
+            var json = File.ReadAllText($"/save_slots/save_slot_number_{saveFile}.json");
+
+            // Make sure the file actualy lived
+            if (json == null || json == "") {
+                this.Window.WriteLine("That save file doesn't exist!");
+                this.Window.WriteLine("Press any key to continue.");
+                this.Window.inputHandler.ReadKey();
+                this.Window.Clear();
+                return this.Setup();
+            }
+
+            // Deserialize the save file
+            var save = JsonConvert.DeserializeObject<SaveFile>(json);
+
+            // Make sure the save file is valid
+            if (save == null) {
+                this.Window.WriteLine("That save file doesn't exist!");
+                this.Window.WriteLine("Press any key to continue.");
+                this.Window.inputHandler.ReadKey();
+                this.Window.Clear();
+                return this.Setup();
+            }
+
+
+            // Return the GameManager
+            return new GameManager(save);
+
+        } else {
+
+            this.Window.WriteLine("What's your adventure name?");
+            var name = this.Window.inputHandler.ReadLine();
+
+            if (name == null || name == "") {
+                this.Window.WriteLine("Please enter a valid name.");
+                return this.Setup();
+            }
+
+            var player = new Player(name, 10, 100);
+            player.AddGold(10);
+            var spellShop = new SpellShop();
+            spellShop.AddSpell(new Fireball(), 15);
+            spellShop.AddSpell(new Heal(), 20);
+            spellShop.AddSpell(new MageArmor(), 10);
+
+            return new GameManager(player, spellShop, new EntityManager());
 
         }
 
@@ -337,7 +426,6 @@ public class WizardGame : Game {
     }
 
     private void RunCommand(string command) {
-
         switch (command) {
             case "help":
                 this.PrintRules();
@@ -356,11 +444,6 @@ public class WizardGame : Game {
                 this.Window.WriteLine("Please enter a valid command.");
                 break;
         }
-
     }
-
-
-
     #endregion
-
 }

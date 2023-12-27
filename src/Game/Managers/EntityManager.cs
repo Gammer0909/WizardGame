@@ -18,6 +18,12 @@ public class EntityManager {
         this.currentEntity = new NullEntity();
     }
 
+    public EntityManager(IEntity currentEntity) {
+        this.entities = new Queue<IEntity>();
+        this.CreateEntities(5);
+        this.currentEntity = currentEntity;
+    }
+
     public void AddEntity(IEntity monster) {
         this.entities.Enqueue(monster);
     }

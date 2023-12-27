@@ -18,6 +18,16 @@ public class SpellShop {
     public SpellShop() {
         this.Spells = new Dictionary<ISpell, int>();
     }
+
+    public SpellShop(ISpell[] spells) {
+
+        this.Spells = new Dictionary<ISpell, int>();
+
+        foreach (var spell in spells) {
+            this.Spells.Add(spell, spell.Cost);
+        }
+
+    }
     #endregion
 
     #region Methods

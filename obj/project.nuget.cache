@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "aDzjxKV1ZyhaypjD2LvzZ3fOoyumRiNwWgIbRjBYywWA0xId1O7+0usxWvjuDz2R9Tm4VsbKakpx5Pt2ASmkbA==",
+  "dgSpecHash": "sxqAF0wCljCXVtcQmAF+pehOo8HRdfyX4Sxk9EG5tYwhWLdPw0Q6q3nV35ofhvV9EcKEOYLexnFZz92hB6E8qw==",
   "success": true,
   "projectFilePath": "/Users/kalliegarzon/Documents/Wizard-Game/Wizard-Game.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/kalliegarzon/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

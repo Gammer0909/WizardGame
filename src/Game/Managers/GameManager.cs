@@ -53,6 +53,15 @@ public class GameManager {
         this.EntityManager = new EntityManager();
         this.IsRunning = true;
     }
+
+    public GameManager(SaveFile saveFile) {
+
+        this.Player = saveFile.player;
+        this.SpellShop = new SpellShop(saveFile.shopSpells);
+        this.EntityManager = new EntityManager(saveFile.currentEntity);
+        this.IsRunning = true;
+
+    }
     #endregion
 
     #region Methods

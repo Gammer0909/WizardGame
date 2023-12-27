@@ -30,6 +30,11 @@ public interface ISpell {
     /// The name of the spell
     /// </summary>
     public string Name { get; set; }
+
+    /// <summary>
+    /// The cost of the spell.
+    /// </summary>
+    public int Cost { get; set; }
     #endregion
 
     #region Methods

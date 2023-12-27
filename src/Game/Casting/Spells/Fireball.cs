@@ -9,13 +9,14 @@ public class Fireball : ISpell {
     public int Damage { get; set; }
     public int ManaCost { get; set; }
     public string Name { get; set; }
-
+    public int Cost { get; set; }
 
     public Fireball() {
         this.Name = "Fireball";
         this.ManaCost = 10;
         this.damageDie = DieType.D8;
         this.Damage = 0;
+        this.Cost = 10;
     }
 
 

@@ -12,6 +12,7 @@ public class MageArmor : ISpell {
     public int Damage { get; set; }
     public int ManaCost { get; set; }
     public string Name { get; set; }
+    public int Cost { get; set; }
     #endregion
 
 
@@ -21,6 +22,7 @@ public class MageArmor : ISpell {
         this.ManaCost = 10;
         this.damageDie = DieType.NONE;
         this.Damage = 0;
+        this.Cost = 10;
     }
 
     #endregion

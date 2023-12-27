@@ -18,7 +18,7 @@ public class Goblin : IEntity {
         this.Name = name;
         this.Health = health;
         this.isArmorActive = false;
-        this.goldDice = DieType.D8;
+        this.goldDice = DieType.D10;
     }
 
     public void Attack(IEntity entity) {

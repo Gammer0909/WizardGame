@@ -16,7 +16,7 @@ public class Skeleton : IEntity {
         this.Name = name;
         this.Health = health;
         this.isArmorActive = false;
-        this.goldDice = DieType.D6;
+        this.goldDice = DieType.D8;
     }
 
     public void Attack(IEntity entity) {
